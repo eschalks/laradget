@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.p-wide {
+    @apply px-5 py-2;
+}
+
+.data-table {
+    @apply w-full;
+}
+
+.data-table th {
+    @apply font-bold text-left p-wide;
+}
+
+.data-table td {
+    @apply text-left p-wide;
+}
+
+.data-table th.money-col {
+    @apply text-right;
+}
+
+.data-table td.money-col {
+    @apply text-right tabular-nums;
+
+    min-width: 8rem;
+}
