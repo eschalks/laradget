@@ -7,8 +7,10 @@ use App\Http\Controllers\CounterParties\ShowCounterParties;
 use App\Http\Controllers\CounterParties\UpdateCounterParty;
 use App\Http\Controllers\PostLogin;
 use App\Http\Controllers\RedirectToStartPage;
+use App\Http\Controllers\Settings\CreatePersonalAccessToken;
 use App\Http\Controllers\Settings\ImportAccount;
 use App\Http\Controllers\Settings\ShowAccountImport;
+use App\Http\Controllers\Settings\ShowPersonalAccessTokenForm;
 use App\Http\Controllers\Settings\ShowSettings;
 use App\Http\Controllers\ShowBudget;
 use App\Http\Controllers\ShowLoginForm;
@@ -55,5 +57,7 @@ Route::middleware(['auth'])->group(function() {
        Route::get('/accounts/import', ShowAccountImport::class);
        Route::post('/accounts/import', ImportAccount::class);
 
+       Route::get('/tokens/create', ShowPersonalAccessTokenForm::class);
+       Route::post('/tokens/create', CreatePersonalAccessToken::class);
     });
 });

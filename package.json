@@ -5,8 +5,6 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "@inertiajs/inertia": "^0.11.1",
-        "@inertiajs/inertia-vue3": "^0.6.0",
         "@tailwindcss/forms": "^0.5.3",
         "@vitejs/plugin-vue": "^3.2.0",
         "autoprefixer": "^10.4.13",
@@ -20,6 +18,7 @@
         "vue": "^3.2.45"
     },
     "dependencies": {
+        "@inertiajs/vue3": "^1.0.0",
         "date-fns": "^2.29.3"
     }
 }

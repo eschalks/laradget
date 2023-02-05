@@ -57,6 +57,9 @@ class ImportSqliteDatabase extends Command
 
         \DB::transaction(function () {
             $tablesToImport = $this->schema->listTableNames();
+            if (!$tablesToImport) {
+                throw new \Exception('Database was not found: '.database_path('database.sqlite'));
+            }
             while ($tablesToImport) {
                 $tableName = array_shift($tablesToImport);
                 if (! $this->importTable($tableName, $tablesToImport)) {

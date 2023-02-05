@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import {usePage} from "@inertiajs/inertia-vue3";
+import {usePage} from "@inertiajs/vue3";
 import {computed, Ref, watch} from "vue";
 import axios from "axios";
 
@@ -29,7 +29,7 @@ const emit = defineEmits<{
 const page = usePage();
 
 const categoryGroups = computed(() => {
-   return page.props.value.categoryGroups as App.Data.Models.CategoryGroupDto[];
+   return page.props.categoryGroups as App.Data.Models.CategoryGroupDto[];
 });
 
 function onInput(e: InputEvent) {

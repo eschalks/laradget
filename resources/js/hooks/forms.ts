@@ -1,4 +1,4 @@
-import {InertiaForm} from "@inertiajs/inertia-vue3";
+import {InertiaForm} from "@inertiajs/vue3";
 import {inject, InjectionKey, provide, Ref} from "vue";
 
 

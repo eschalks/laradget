@@ -13,7 +13,7 @@
 
 
 <script lang="ts" setup>
-import {useForm} from "@inertiajs/inertia-vue3";
+import {useForm} from "@inertiajs/vue3";
 import {ValidationErrors} from "../forms";
 import {computed} from "vue";
 import FormCard from "@/components/cards/FormCard.vue";

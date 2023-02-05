@@ -9,13 +9,13 @@
 
 <script lang="ts" setup>
 import MainNavigationItem from "@/components/navigation/MainNavigationItem.vue";
-import {usePage} from "@inertiajs/inertia-vue3";
+import {usePage} from "@inertiajs/vue3";
 import {watch} from "vue";
 
 
 const page = usePage();
 
-watch(page.props, (newProps) => {
+watch(() => page.props, (newProps) => {
 
 }, {immediate: true});
 </script>

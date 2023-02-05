@@ -1,11 +1,11 @@
 <template>
-<InertiaLink :href="href" class="block p-wide bg-white text-blue-500">
+<Link :href="href" class="block p-wide bg-white text-blue-500">
     <slot />
-</InertiaLink>
+</Link>
 </template>
 
 <script lang="ts" setup>
-import {InertiaLink} from "@inertiajs/inertia-vue3";
+import {Link} from "@inertiajs/vue3";
 
 const props = defineProps<{
     href: string,

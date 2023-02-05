@@ -15,7 +15,7 @@ import FormCard from "../components/cards/FormCard.vue";
 import PageLayout from "../layouts/PageLayout.vue";
 import ApiResult from "../components/ApiResult.vue";
 import ImportableAccount from "../components/import/ImportableAccount.vue";
-import {useForm} from "@inertiajs/inertia-vue3";
+import {useForm} from "@inertiajs/vue3";
 
 const form = useForm({
     accounts: [],

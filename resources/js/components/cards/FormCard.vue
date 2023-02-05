@@ -25,7 +25,7 @@ import CardWrapper from "./CardWrapper.vue";
 import CardHeader from "./CardHeader.vue";
 import CardBody from "./CardBody.vue";
 import SubmitButton from "../buttons/SubmitButton.vue";
-import {InertiaForm} from "@inertiajs/inertia-vue3";
+import {InertiaForm} from "@inertiajs/vue3";
 import {computed, ref, toRef, toRefs, watch} from "vue";
 import {provideForm} from "@/hooks/forms";
 

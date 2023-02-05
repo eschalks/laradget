@@ -8,12 +8,13 @@
         "php": "^8.1",
         "barryvdh/laravel-ide-helper": "^2.12",
         "beberlei/assert": "^3.3",
+        "endroid/qr-code": "^4.7",
         "guzzlehttp/guzzle": "^7.5",
         "inertiajs/inertia-laravel": "^0.6.4",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "spatie/laravel-data": "^2.0"
+        "spatie/laravel-data": "^3.0.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
