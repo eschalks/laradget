@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class AbstractModel extends Model
@@ -13,5 +14,10 @@ abstract class AbstractModel extends Model
         return str(static::class)
             ->classBasename()
             ->snake(' ');
+    }
+
+    public function asCollection(): Collection
+    {
+        return $this->newCollection([$this]);
     }
 }
