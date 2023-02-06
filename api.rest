@@ -1,0 +1,15 @@
+GET {{url}}/api/transactions
+Authorization: Bearer {{token}}
+
+###
+
+
+GET {{url}}/api/summary/2023-01/2023-12
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET {{url}}/api/categories
+Accept: application/json
+Authorization: Bearer {{token}}

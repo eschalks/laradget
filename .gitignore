@@ -17,3 +17,4 @@ yarn-error.log
 /.idea
 /.vscode
 /resources/types/generated.d.ts
+http-client.private.env.json
