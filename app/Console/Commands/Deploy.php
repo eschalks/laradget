@@ -6,8 +6,10 @@ use Assert\Assertion;
 use Illuminate\Console\Command;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Local\LocalFilesystemAdapter;
+use League\Flysystem\PhpseclibV3\SftpAdapter;
+use League\Flysystem\PhpseclibV3\SftpConnectionProvider;
+use League\Flysystem\UnixVisibility\PortableVisibilityConverter;
 use phpseclib3\Crypt\RSA;
-use phpseclib3\Net\SFTP;
 use phpseclib3\Net\SSH2;
 use Symfony\Component\Process\Process;
 
@@ -49,20 +51,29 @@ class Deploy extends Command
 
         try {
 
-            $ssh = new SSH2($host, $port);
+            $ssh        = new SSH2($host, $port);
             $privateKey = RSA::loadPrivateKey(file_get_contents(env('SSH_KEY')));
             $ssh->login($username, $privateKey);
 
             $this->output->writeln($ssh->exec('cd laradget && git pull && sh build.sh'));
 
-            $sftp = new SFTP($host, $port);
-            $sftp->login($username, $privateKey);
-            $sftp->delete('laradget/public/build');
+            $sftpConnectionProvider = new SftpConnectionProvider($host, $username, privateKey: $privateKey,
+                port:                                            $port,);
+            $sftpAdapter            = new SftpAdapter($sftpConnectionProvider, 'laradget/public', PortableVisibilityConverter::fromArray([
+                'file' => [
+                    'public' => 0655,
+                ],
+                'dir' => [
+                    'public' => 0755,
+                ]
+                                                                                                                                         ]));
+            $sftpFs                 = new Filesystem($sftpAdapter);
+
+            $sftpFs->deleteDirectory('build');
 
             $this->output->progressStart();
-            $this->copyFiles($publicFs, $sftp, 'build');
+            $this->copyFiles($publicFs, $sftpFs, 'build');
             $this->output->progressFinish();
-
         }
         finally {
             $publicFs->deleteDirectory('build');
@@ -71,19 +82,21 @@ class Deploy extends Command
         return Command::SUCCESS;
     }
 
-    private function copyFiles(Filesystem $publicFs, SFTP $sftp, string $path): void
+    private function copyFiles(Filesystem $from, Filesystem $to, string $path): void
     {
         /** @var \League\Flysystem\StorageAttributes $file */
-        foreach ($publicFs->listContents($path) as $file) {
+        foreach ($from->listContents($path) as $file) {
             $filePath = $file->path();
             if ($file->isDir()) {
-                $this->copyFiles($publicFs, $sftp, $filePath);
+                $this->copyFiles($from, $to, $filePath);
                 continue;
             }
 
-            $fileStream = $publicFs->readStream($filePath);
-            $sftp->put("laradget/public/$filePath", $fileStream);
-            fclose($fileStream);
+            $fileStream = $from->readStream($filePath);
+            $to->writeStream($filePath, $fileStream, [
+                'visibility' => 'public',
+                'directory_visibility' => 'public',
+            ]);
             $this->output->progressAdvance();
         }
     }
