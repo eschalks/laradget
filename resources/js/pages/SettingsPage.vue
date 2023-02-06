@@ -22,7 +22,7 @@
                 <th></th>
             </tr>
             </thead>
-            <tr v-for="token in tokens">
+            <tr v-for="token in tokens" :key="token.id">
                 <td>{{ token.name }}</td>
                 <td>
                     {{ token.lastUsedAt ? format(parseISO(token.lastUsedAt), 'yyyy-MM-dd HH:mm') : '-' }}
