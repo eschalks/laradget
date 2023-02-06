@@ -8,6 +8,7 @@ use App\Http\Controllers\CounterParties\UpdateCounterParty;
 use App\Http\Controllers\PostLogin;
 use App\Http\Controllers\RedirectToStartPage;
 use App\Http\Controllers\Settings\CreatePersonalAccessToken;
+use App\Http\Controllers\Settings\DeletePersonalAccessToken;
 use App\Http\Controllers\Settings\ImportAccount;
 use App\Http\Controllers\Settings\ShowAccountImport;
 use App\Http\Controllers\Settings\ShowPersonalAccessTokenForm;
@@ -59,5 +60,6 @@ Route::middleware(['auth'])->group(function() {
 
        Route::get('/tokens/create', ShowPersonalAccessTokenForm::class);
        Route::post('/tokens/create', CreatePersonalAccessToken::class);
+       Route::delete('/tokens/{token}', DeletePersonalAccessToken::class);
     });
 });
