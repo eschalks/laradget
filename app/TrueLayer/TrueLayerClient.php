@@ -158,8 +158,7 @@ class TrueLayerClient
     {
         $response = \Http::asForm()
                          ->post('https://auth.truelayer.com/connect/token', [
-                             'client_id'     => $this->clientId,
-                             'client_secret' => $this->clientSecret,
+                             ...$this->getConfiguration(['client_id', 'client_secret']),
                              'redirect_uri'  => $this->getRedirectUri(),
                              'grant_type'    => 'authorization_code',
                              'code'          => request('code'),
