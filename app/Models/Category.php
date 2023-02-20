@@ -23,6 +23,8 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereSeq($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $is_debit
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereIsDebit($value)
  */
 class Category extends AbstractModel
 {

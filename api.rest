@@ -13,3 +13,9 @@ Authorization: Bearer {{token}}
 GET {{url}}/api/categories
 Accept: application/json
 Authorization: Bearer {{token}}
+
+###
+
+GET {{url}}/api/import/accounts
+Accept: application/json
+Authorization: Bearer {{token}}

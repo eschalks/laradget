@@ -18,6 +18,8 @@ use Carbon\CarbonImmutable;
  * @method static \Illuminate\Database\Eloquent\Builder|Month whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Month whereStartsAt($value)
  * @mixin \Eloquent
+ * @method static PeriodCollection|static[] all($columns = ['*'])
+ * @method static PeriodCollection|static[] get($columns = ['*'])
  */
 class Month extends AbstractModel
 {

@@ -34,5 +34,9 @@ return [
     'truelayer' => [
         'client_id' => env('TL_CLIENT'),
         'client_secret' => env('TL_SECRET'),
+        'parameters' => [
+            'scope' => 'info accounts balance cards transactions direct_debits standing_orders offline_access',
+            'providers' => 'nl-ob-all nl-xs2a-all',
+        ]
     ]
 ];

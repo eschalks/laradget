@@ -5,6 +5,8 @@ use App\Http\Controllers\Budget\ShowMonthSummary;
 use App\Http\Controllers\Budget\ShowRangeSummary;
 use App\Http\Controllers\CounterParties\ShowCounterParties;
 use App\Http\Controllers\CounterParties\UpdateCounterParty;
+use App\Http\Controllers\OAuth\FinishOAuth;
+use App\Http\Controllers\OAuth\StartOAuth;
 use App\Http\Controllers\PostLogin;
 use App\Http\Controllers\RedirectToStartPage;
 use App\Http\Controllers\Settings\CreatePersonalAccessToken;
@@ -34,6 +36,9 @@ Route::get('/login', ShowLoginForm::class)->name('login');
 Route::post('/login', PostLogin::class);
 
 Route::middleware(['auth'])->group(function() {
+    Route::get('oauth', StartOAuth::class)->name('oauth.start');
+    Route::get('oauth/callback', FinishOAuth::class)->name('oauth.callback');
+
     Route::prefix('/budget')->group(function () {
         Route::get('', RedirectToCurrentMonth::class);
         Route::get('/range/{startDate}/{endDate?}', ShowRangeSummary::class);

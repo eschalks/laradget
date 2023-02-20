@@ -34,6 +34,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereTransactionAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $month_id
+ * @property int|null $counter_party_id
+ * @property-read \App\Models\CounterParty|null $counterParty
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereCounterPartyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereMonthId($value)
  */
 class Transaction extends AbstractModel
 {
