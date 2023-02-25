@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function() {
 
     Route::prefix('/budget')->group(function () {
         Route::get('', RedirectToCurrentMonth::class);
+
         Route::get('/range/{startDate}/{endDate?}', ShowRangeSummary::class);
         Route::get('/{year}/{month?}', ShowMonthSummary::class);
     });

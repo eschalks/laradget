@@ -35,7 +35,6 @@ const props = defineProps<{
 const totalSpent = computed(() => {
     let total = 0;
 
-    console.log(props.summary.transactionTotals);
     for (const category of props.categoryGroup.categories) {
         total += props.summary.transactionTotals[category.id] ?? 0;
     }

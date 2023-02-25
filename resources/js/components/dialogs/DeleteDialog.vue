@@ -1,9 +1,9 @@
 <template>
-<AnimatedDialog :is-open="isOpen" @close="emit('cancel')">
+<AnimatedDialog  @close="emit('cancel')">
     Are you sure you want to delete <strong>{{name}}</strong>?
 
     <template #actions>
-        <DialogCancelButton @click="emit('cancel')">
+        <DialogCancelButton @click="dialog.close()">
             Cancel
         </DialogCancelButton>
         <DialogConfirmButton class="ml-4" @click="emit('confirm')">
@@ -17,11 +17,13 @@
 import AnimatedDialog from "@/components/dialogs/AnimatedDialog.vue";
 import DialogCancelButton from "@/components/dialogs/DialogCancelButton.vue";
 import DialogConfirmButton from "@/components/dialogs/DialogConfirmButton.vue";
+import {useDialog} from "@/hooks/dialogs";
 
 const props = defineProps<{
     name: string,
-    isOpen: boolean,
 }>();
+
+const dialog = useDialog();
 
 const emit = defineEmits<{
     (e: 'cancel'): void,

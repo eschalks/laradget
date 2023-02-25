@@ -1,8 +1,8 @@
 <template>
-    <button class="p-wide bg-red-500 hover:bg-red-600 text-white" type="button" @click="isDialogOpen = true">
+    <button class="p-wide bg-red-500 hover:bg-red-600 text-white" type="button" @click="dialog.open()">
         Delete
 
-        <DeleteDialog :isOpen="isDialogOpen" @confirm="onConfirm" @cancel="onCancel" :name="name"/>
+        <DeleteDialog  @confirm="onConfirm" :name="name"/>
     </button>
 </template>
 
@@ -10,6 +10,7 @@
 import DeleteDialog from "@/components/dialogs/DeleteDialog.vue";
 import {ref} from "vue";
 import {router} from '@inertiajs/vue3';
+import {useDialog} from "@/hooks/dialogs";
 
 const props = defineProps<{
     name: string,
@@ -21,8 +22,7 @@ const emit = defineEmits<{
     (e: 'delete'): void,
 }>();
 
-const isDialogOpen = ref(false);
-
+const dialog = useDialog();
 
 function onConfirm() {
     router.delete(props.action, {
@@ -33,12 +33,9 @@ function onConfirm() {
                 });
             }
 
-            isDialogOpen.value = false;
+            dialog.close();
         }
     });
 }
 
-function onCancel() {
-    isDialogOpen.value = false;
-}
 </script>

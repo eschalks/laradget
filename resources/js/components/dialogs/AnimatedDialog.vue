@@ -1,5 +1,5 @@
 <template>
-    <TransitionRoot appear :show="isOpen" as="template">
+    <TransitionRoot appear :show="dialog.isOpen" as="template">
         <Dialog as="div" @close="close" class="relative z-10">
             <TransitionChild
                 as="template"
@@ -27,14 +27,16 @@
                         leave-to="opacity-0 scale-95"
                     >
                         <DialogPanel
-                            class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+                            v-if="isBodyLoaded"
+                            class="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
                         >
-<!--                            <DialogTitle-->
-<!--                                as="h3"-->
-<!--                                class="text-lg font-medium leading-6 text-gray-900"-->
-<!--                            >-->
-<!--                                {{ title }}-->
-<!--                            </DialogTitle>-->
+                            <DialogTitle
+                                v-if="title"
+                                as="h3"
+                                class="text-lg font-medium leading-6 text-gray-900"
+                            >
+                                {{ title }}
+                            </DialogTitle>
                             <div class="mt-2">
                                 <slot />
                             </div>
@@ -59,17 +61,34 @@
 
 <script lang="ts" setup>
 import {Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot,} from '@headlessui/vue';
+import {useDialog} from "@/hooks/dialogs";
+import {ref, watch} from "vue";
 
-const props = defineProps<{
-    isOpen: boolean,
+const dialog = useDialog();
+
+const props = withDefaults(defineProps<{
     title?: string,
-}>();
+    lazy?: boolean,
+}>(), {
+  lazy: true,
+});
+
+// If this was ever opened, used to delay the rendering of the body until the first time the dialog is opened.
+const isBodyLoaded = ref(!props.lazy);
 
 const emit = defineEmits<{
     (e: 'close'): void,
 }>();
 
+watch(() => dialog.isOpen, (isOpen) => {
+    if (isOpen) {
+        isBodyLoaded.value = true;
+    }
+});
+
 function close() {
+    dialog.close();
     emit('close');
 }
+
 </script>
