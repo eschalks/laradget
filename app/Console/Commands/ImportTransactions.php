@@ -41,6 +41,10 @@ class ImportTransactions extends Command
             $lastTransactionAt = Transaction::orderBy('transaction_at', 'desc')
                                             ->first()->transaction_at;
 
+            if ($lastTransactionAt === null) {
+                $lastTransactionAt = today()->subDays(90);
+            }
+
             $this->output->writeln("Fetching all transactions since $lastTransactionAt");
 
             $transactions = $client->fetchTransactions($account->external_id, $lastTransactionAt, now());

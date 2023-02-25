@@ -81,7 +81,7 @@ class ImportSqliteDatabase extends Command
 
     private function importTable(string $tableName, array $tablesToImport): bool
     {
-        if ($tableName === 'migrations') {
+        if (\DB::table($tableName)->exists()) {
             return true;
         }
 
