@@ -9,6 +9,6 @@ class MoneyTrueLayerCast implements Cast
 {
     public function cast(DataProperty $property, mixed $value, array $context): Money
     {
-        return new Money($value * 100);
+        return Money::fromFloat($value);
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Contracts\Database\Eloquent\Castable;
 
 class Money implements Castable, \JsonSerializable
 {
-    public function __construct(private readonly int $value)
+    public function __construct(private readonly string $value)
     {
     }
 
@@ -15,15 +15,20 @@ class Money implements Castable, \JsonSerializable
         return new MoneyModelCast();
     }
 
+    public static function fromFloat(float $value): self
+    {
+        return new self((string)$value);
+    }
+
     /**
-     * @return int
+     * @return string
      */
-    public function getValue(): int
+    public function getValue(): string
     {
         return $this->value;
     }
 
-    public function jsonSerialize(): int
+    public function jsonSerialize(): string
     {
         return $this->value;
     }
