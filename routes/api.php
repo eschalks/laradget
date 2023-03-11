@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\GetCategories;
 use App\Http\Controllers\Api\GetImportableAccounts;
 use App\Http\Controllers\Api\GetPeriodSummary;
 use App\Http\Controllers\Api\GetTransactions;
+use App\Http\Controllers\Api\GetUncategorizedTransactions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::get('/import/accounts', GetImportableAccounts::class);
     Route::get('/transactions', GetTransactions::class);
+    Route::get('/transactions/uncategorized', GetUncategorizedTransactions::class);
     Route::get('/summary/{start}/{end}', GetPeriodSummary::class);
     Route::get('/categories', GetCategories::class);
 });
