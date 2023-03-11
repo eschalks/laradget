@@ -2,7 +2,7 @@
 <div class="bg-blue-500 flex items-end px-4 pt-4">
     <div class="container mx-auto">
         <div class="flex">
-            <PeriodNavigation />
+            <PeriodNavigation class="flex-1" />
             <div class="flex flex-shrink-0">
                 <MainNavigationItem href="/counter_parties">Parties</MainNavigationItem>
                 <MainNavigationItem href="/settings">Settings</MainNavigationItem>

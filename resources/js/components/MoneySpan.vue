@@ -9,7 +9,7 @@
 import {computed} from "vue";
 
 const props = defineProps<{
-    amount?: number|null,
+    amount?: string|null,
 }>();
 
 const formattedAmount = computed(() => {
@@ -17,7 +17,7 @@ const formattedAmount = computed(() => {
         return '0.00';
     }
 
-    return (props.amount / 100).toFixed(2);
+    return props.amount;
 });
 
 </script>

@@ -4,7 +4,7 @@
         <td></td>
         <td class="tabular-nums text-right">
             <DialogOpenLink @click="isTransactionsDialogOpen = true" class="hover:text-blue-500">
-                <MoneySpan :amount="summary.transactionTotals[category.id]"/>
+                <MoneySpan :amount="summary.categoryTotals[category.id]"/>
 
                 <BudgetCategoryTransactionsDialog
                     :category="category"

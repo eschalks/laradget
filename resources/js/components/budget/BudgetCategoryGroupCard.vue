@@ -32,13 +32,5 @@ const props = defineProps<{
     categoryGroup: App.Data.Models.CategoryGroupDto,
 }>();
 
-const totalSpent = computed(() => {
-    let total = 0;
-
-    for (const category of props.categoryGroup.categories) {
-        total += props.summary.transactionTotals[category.id] ?? 0;
-    }
-
-    return total;
-});
+const totalSpent = computed(() => props.summary.categoryGroupTotals[props.categoryGroup.id]);
 </script>

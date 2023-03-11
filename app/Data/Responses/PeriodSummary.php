@@ -13,7 +13,9 @@ class PeriodSummary extends Data
         public readonly \DateTimeInterface $startsAt,
         public readonly \DateTimeInterface $endsAt,
         #[LiteralTypeScriptType('Record<number, number>')]
-        public readonly array              $transactionTotals,
+        public readonly array              $categoryTotals,
+        #[LiteralTypeScriptType('Record<number, number>')]
+        public readonly array              $categoryGroupTotals,
     ) {
     }
 }

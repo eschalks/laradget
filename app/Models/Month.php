@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Http\Controllers\PeriodCollection;
 use Carbon\CarbonImmutable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Period
@@ -55,5 +56,10 @@ class Month extends AbstractModel
     public function newCollection(array $models = [])
     {
         return new PeriodCollection($models);
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
     }
 }

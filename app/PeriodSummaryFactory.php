@@ -7,6 +7,7 @@ use App\Models\Month;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
+use Illuminate\Contracts\Database\Query\Builder as BuilderContract;
 use Illuminate\Database\Eloquent\Collection;
 
 class PeriodSummaryFactory
@@ -14,37 +15,66 @@ class PeriodSummaryFactory
     public function createForRange(\DateTimeInterface $startDate, \DateTimeInterface $endDate): PeriodSummary
     {
         // Database stores these as DATEs, so time should always be 00:00:00
-        $startsAt = CarbonImmutable::instance($startDate)->startOfDay();
-        $endsAt = CarbonImmutable::instance($endDate)->startOfDay();
+        $startsAt = CarbonImmutable::instance($startDate)
+                                   ->startOfDay();
+        $endsAt   = CarbonImmutable::instance($endDate)
+                                   ->startOfDay();
 
-        $months = Month::where('starts_at', '>=', $startsAt)
-                       ->where('ends_at', '<=', $endsAt)
-                       ->get();
+        $transactionQuery = $this->createQueryForRange($startsAt, $endsAt);
 
-        return new PeriodSummary($startDate, $endDate, $this->fetchTransactionTotals($months));
+        return $this->createSummary($startsAt, $endsAt, $transactionQuery);
     }
 
     public function createForMonth(Month $month): PeriodSummary
     {
-        return new PeriodSummary($month->starts_at, $month->ends_at,
-                                 $this->fetchTransactionTotals($month->asCollection()));
+        return $this->createSummary($month->starts_at, $month->ends_at, $month->transactions());
     }
 
-    private function fetchTransactionTotals(Collection $months): array
-    {
-        $existingMonths = $months->filter->exists;
+    private function createSummary(
+        \DateTimeInterface $startsAt,
+        \DateTimeInterface $endsAt,
+        BuilderContract    $transactionQuery
+    ): PeriodSummary {
+        $categoryTotals      = $this->fetchCategoryTotals($transactionQuery);
+        $categoryGroupTotals = $this->fetchCategoryGroupTotals($transactionQuery);
 
-        if ($existingMonths->isEmpty()) {
-            return [];
+        return new PeriodSummary($startsAt, $endsAt, $categoryTotals, $categoryGroupTotals);
+    }
+
+    private function fetchCategoryTotals(BuilderContract $transactionQuery): array
+    {
+
+        return (clone $transactionQuery)->groupBy('category_id')
+                                        ->select([
+                                                     \DB::raw('SUM(amount) as amount'),
+                                                     'category_id',
+                                                 ])
+                                        ->pluck('amount', 'category_id')
+                                        ->all();
+    }
+
+    private function fetchCategoryGroupTotals(BuilderContract $transactionQuery): array
+    {
+        return (clone $transactionQuery)->groupBy('category_group_id')
+                                        ->join('categories', 'transactions.category_id', '=', 'categories.id')
+                                        ->select([
+                                                     \DB::raw('SUM(amount) as amount'),
+                                                     'category_group_id',
+                                                 ])
+                                        ->pluck('amount', 'category_group_id')
+                                        ->all();
+    }
+
+    private function createQueryForRange(CarbonImmutable $startsAt, CarbonImmutable $endsAt)
+    {
+        if ($startsAt->day === 1 && $endsAt->isLastOfMonth()) {
+            $months = Month::where('starts_at', '>=', $startsAt)
+                           ->where('ends_at', '<=', $endsAt)
+                           ->get();
+
+            return Transaction::whereIn('month_id', $months->modelKeys());
         }
 
-        return Transaction::whereIn('month_id', $existingMonths->modelKeys())
-                          ->groupBy('category_id')
-                          ->select([
-                                       \DB::raw('SUM(amount) as amount'),
-                                       'category_id',
-                                   ])
-                          ->pluck('amount', 'category_id')
-                          ->all();
+        return Transaction::whereBetween('transaction_at', [$startsAt, $endsAt]);
     }
 }

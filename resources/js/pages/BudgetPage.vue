@@ -1,6 +1,6 @@
 <template>
 <PageLayout title="Budget">
-    <p>Uncategorized: <MoneySpan :amount="summary.transactionTotals['']"/></p>
+    <p>Uncategorized: <MoneySpan :amount="summary.categoryTotals['']"/></p>
 
     <BudgetCategoryGroupCard
         class="my-4"
