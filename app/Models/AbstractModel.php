@@ -31,9 +31,13 @@ abstract class AbstractModel extends Model
         foreach ($class->getMethods() as $method) {
             $attributes = $method->getAttributes(OnChangeTo::class);
             foreach ($attributes as $attribute) {
-                $field = Arr::first($attribute->getArguments());
-                static::saving(static function (AbstractModel $model) use ($field, $method) {
-                    if ($model->isDirty($field)) {
+                /** @var  OnChangeTo $attributeInstance */
+                $attributeInstance = $attribute->newInstance();
+
+                $event = $attributeInstance->beforeSave ? 'saving' : 'saved';
+
+                static::{$event}(static function (AbstractModel $model) use ($attributeInstance, $method) {
+                    if ($model->isDirty($attributeInstance->field)) {
                         $method->invoke($model);
                     }
                 });

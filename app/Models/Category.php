@@ -30,6 +30,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Transaction> $transactions
  * @property-read int|null                                                               $transactions_count
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereMonthOffset($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Transaction> $transactions
  * @mixin \Eloquent
  */
 class Category extends AbstractModel
@@ -39,13 +40,15 @@ class Category extends AbstractModel
         return $this->hasMany(Transaction::class);
     }
 
-    #[OnChangeTo('month_offset')]
+    #[OnChangeTo('month_offset', beforeSave: false)]
     private function updateTransactionDates(): void
     {
         \DB::transaction(function () {
-            foreach ($this->transactions as $transaction) {
-                $transaction->setRelation('category', $this);
-                $transaction->updateMonth();
+            // Using ->get() to make sure we always get the most up-to-date list of transactions
+            /** @var \App\Models\Transaction $transaction */
+            foreach ($this->transactions()->get() as $transaction) {
+                $transaction->moveToExpectedMonth();
+                $transaction->save();
             }
         });
     }

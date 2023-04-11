@@ -10,7 +10,7 @@ use Attribute;
  */
 class OnChangeTo
 {
-    public function __construct(public readonly string $field)
+    public function __construct(public readonly string $field, public bool $beforeSave = true)
     {
     }
 }

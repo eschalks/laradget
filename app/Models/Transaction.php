@@ -40,6 +40,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereCounterPartyId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereMonthId($value)
  * @property-read \App\Models\Category|null $category
+ * @property-read \App\Models\Month $month
  * @mixin \Eloquent
  */
 class Transaction extends AbstractModel
@@ -75,6 +76,11 @@ class Transaction extends AbstractModel
         return $this->belongsTo(Category::class);
     }
 
+    public function month(): BelongsTo
+    {
+        return $this->belongsTo(Month::class);
+    }
+
     public function getExpectedMonth(): Month
     {
         if (!$this->category) {
@@ -82,22 +88,13 @@ class Transaction extends AbstractModel
         }
 
 
-        $referenceDate = $this->transaction_at->clone()->addMonths($this->category->month_offset);
+        $referenceDate = $this->transaction_at->clone()->startOfMonth()->addMonths($this->category->month_offset);
         return Month::findOrCreateForDate($referenceDate);
     }
 
     #[OnChangeTo('category_id')]
-    private function moveToExpectedMonth(): void {
+    public function moveToExpectedMonth(): void {
+        $this->load('category');
         $this->month_id = $this->getExpectedMonth()->getKey();
-    }
-
-    public function updateMonth(): bool
-    {
-        $this->moveToExpectedMonth();
-        if (!$this->exists) {
-            return false;
-        }
-
-        return $this->save();
     }
 }

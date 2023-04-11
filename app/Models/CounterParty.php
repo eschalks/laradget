@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|CounterParty whereUpdatedAt($value)
  * @property-read Collection<int, \App\Models\Transaction> $transactions
  * @property-read int|null $transactions_count
+ * @property-read Collection<int, \App\Models\Transaction> $transactions
  * @mixin \Eloquent
  */
 class CounterParty extends AbstractModel
