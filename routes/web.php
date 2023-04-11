@@ -3,6 +3,8 @@
 use App\Http\Controllers\Budget\RedirectToCurrentMonth;
 use App\Http\Controllers\Budget\ShowMonthSummary;
 use App\Http\Controllers\Budget\ShowRangeSummary;
+use App\Http\Controllers\Categories\ShowCategories;
+use App\Http\Controllers\Categories\UpdateCategory;
 use App\Http\Controllers\CounterParties\ShowCounterParties;
 use App\Http\Controllers\CounterParties\UpdateCounterParty;
 use App\Http\Controllers\OAuth\FinishOAuth;
@@ -18,6 +20,7 @@ use App\Http\Controllers\Settings\ShowSettings;
 use App\Http\Controllers\ShowBudget;
 use App\Http\Controllers\ShowLoginForm;
 use App\Http\Controllers\Transactions\ShowPeriodTransactions;
+use App\Http\Controllers\Transactions\UpdateTransaction;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,10 +56,6 @@ Route::middleware(['auth'])->group(function() {
 
     Route::prefix('/counter_parties')->group(static function() {
         Route::get('', ShowCounterParties::class);
-        Route::prefix('/{counter_party}')->group(static function() {
-            Route::put('', UpdateCounterParty::class);
-        });
-
     });
 
     Route::prefix('/settings')->group(function() {
@@ -67,5 +66,10 @@ Route::middleware(['auth'])->group(function() {
        Route::get('/tokens/create', ShowPersonalAccessTokenForm::class);
        Route::post('/tokens/create', CreatePersonalAccessToken::class);
        Route::delete('/tokens/{token}', DeletePersonalAccessToken::class);
+    });
+
+    Route::prefix('/categories')->as('categories.')->group(function() {
+        Route::get('', ShowCategories::class)->name('index');
+        Route::put('/{category}', UpdateCategory::class)->name('update');
     });
 });

@@ -13,6 +13,7 @@
 import {usePage} from "@inertiajs/vue3";
 import {computed, Ref, watch} from "vue";
 import axios from "axios";
+import {useCategoryGroups} from "@/hooks/page";
 
 const props = withDefaults(defineProps<{
     modelValue: string | number | null,
@@ -26,11 +27,8 @@ const emit = defineEmits<{
     (e: 'update:modelValue', value: number | string | null): void,
 }>();
 
-const page = usePage();
 
-const categoryGroups = computed(() => {
-   return page.props.categoryGroups as App.Data.Models.CategoryGroupDto[];
-});
+const categoryGroups = useCategoryGroups();
 
 function onInput(e: InputEvent) {
     emit('update:modelValue', (e.target as HTMLSelectElement).value);
@@ -42,7 +40,7 @@ watch(() => props.modelValue, async (newId) => {
        data[props.saveField] = newId;
 
        await axios.put(props.saveUrl, {
-          category_id: newId,
+          categoryId: newId,
        });
    }
 });

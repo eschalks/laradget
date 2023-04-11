@@ -1,15 +1,34 @@
-import {computed, ComputedRef} from "vue";
-import {usePage} from "@inertiajs/vue3";
+import {computed, ComputedRef, getCurrentInstance, Ref,} from "vue";
+import {router, usePage} from "@inertiajs/vue3";
 
-export function usePageProp<T>(key: string): ComputedRef<T|null> {
+
+
+export function usePageProp<T>(key: string, defaultFactory: () => T): ComputedRef<T|null> {
     const page = usePage();
-    const pageProps = page.props;
 
     return computed(() => {
-       if (key in pageProps) {
+        const pageProps = page.props;
+
+       if (pageProps && key in pageProps) {
            return pageProps[key] as T;
        }
 
-       return null;
+       return defaultFactory();
     });
+}
+
+export function useCategoryGroups() {
+    return usePageProp<App.Data.Models.CategoryGroupDto[]>('categoryGroups', () => {
+        console.warn('Page is missing category groups. Please call CategoryGroupDto::shareWithInertia()');
+        return [];
+    });
+}
+
+
+export function usePageRef() {
+    return computed(() => getCurrentInstance()?.appContext.app.config.globalProperties.$page);
+}
+
+export function useCurrentUrl(): Ref<string | undefined> {
+    return computed(() => usePageRef().value?.url);
 }

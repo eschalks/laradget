@@ -9,7 +9,9 @@
             </template>
         </td>
         <td>{{ transaction.counterParty?.name }}</td>
-        <td><CategorySelect class="w-full" v-model="transaction.categoryId" /></td>
+        <td>
+            <CategorySelect class="w-full" v-model="transaction.categoryId" :save-url="saveUrl" />
+        </td>
         <td class="money-col">
             <MoneySpan :amount="transaction.amount"/>
         </td>
@@ -35,4 +37,6 @@ const descriptionLines = computed(() => {
    return props.transaction.description.split("<br>");
 
 });
+
+const saveUrl = computed(() => route('api.transactions.update', [props.transaction.id]));
 </script>

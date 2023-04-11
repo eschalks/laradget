@@ -14,6 +14,8 @@ class CategoryDto extends Data
         public readonly string $name,
         #[MapInputName('is_debit')]
         public readonly bool $isDebit,
+        #[MapInputName('month_offset')]
+        public readonly int $monthOffset,
     ) {
 
     }

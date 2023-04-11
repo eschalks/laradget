@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Attributes\OnChangeTo;
 use App\Money;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -33,12 +34,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction wherePeriodId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereTransactionAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUpdatedAt($value)
- * @mixin \Eloquent
  * @property int $month_id
  * @property int|null $counter_party_id
  * @property-read \App\Models\CounterParty|null $counterParty
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereCounterPartyId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereMonthId($value)
+ * @property-read \App\Models\Category|null $category
+ * @mixin \Eloquent
  */
 class Transaction extends AbstractModel
 {
@@ -50,8 +52,52 @@ class Transaction extends AbstractModel
         'amount' => Money::class,
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function (Transaction $transaction) {
+            if ($transaction->isDirty('category_id')) {
+                $transaction->month_id = $transaction->getExpectedMonth()->getKey();
+            }
+
+            return true;
+        });
+    }
+
     public function counterParty(): BelongsTo
     {
         return $this->belongsTo(CounterParty::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function getExpectedMonth(): Month
+    {
+        if (!$this->category) {
+            return Month::findOrCreateForDate($this->transaction_at);
+        }
+
+
+        $referenceDate = $this->transaction_at->clone()->addMonths($this->category->month_offset);
+        return Month::findOrCreateForDate($referenceDate);
+    }
+
+    #[OnChangeTo('category_id')]
+    private function moveToExpectedMonth(): void {
+        $this->month_id = $this->getExpectedMonth()->getKey();
+    }
+
+    public function updateMonth(): bool
+    {
+        $this->moveToExpectedMonth();
+        if (!$this->exists) {
+            return false;
+        }
+
+        return $this->save();
     }
 }

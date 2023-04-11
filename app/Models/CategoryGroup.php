@@ -21,9 +21,9 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  * @method static \Illuminate\Database\Eloquent\Builder|CategoryGroup whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CategoryGroup whereSeq($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CategoryGroup whereUpdatedAt($value)
- * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $categories
  * @property-read int|null $categories_count
+ * @mixin \Eloquent
  */
 class CategoryGroup extends AbstractModel
 {

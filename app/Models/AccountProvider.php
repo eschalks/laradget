@@ -16,9 +16,9 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|AccountProvider whereExpiresAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AccountProvider whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AccountProvider whereRefreshToken($value)
- * @mixin \Eloquent
  * @property int $is_active
  * @method static \Illuminate\Database\Eloquent\Builder|AccountProvider whereIsActive($value)
+ * @mixin \Eloquent
  */
 class AccountProvider extends AbstractModel
 {

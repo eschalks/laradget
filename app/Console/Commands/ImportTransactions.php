@@ -70,8 +70,6 @@ class ImportTransactions extends Command
                                 'external_id'      => $transaction->transaction_id,
                                 'account_id'       => Account::first()
                                                              ->getKey(),
-                                'month_id'         => Month::findOrCreateForDate($transaction->timestamp)
-                                                           ->getKey(),
                                 'category_id'      => $counterParty?->default_category_id,
                                 'counter_party_id' => $counterParty?->getKey(),
                                 'transaction_at'   => $transaction->timestamp,

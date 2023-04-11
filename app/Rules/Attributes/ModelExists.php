@@ -12,6 +12,7 @@ class ModelExists extends ValidationRule
 {
     public function __construct(public  readonly string $modelClass)
     {
+
     }
 
     public function getRules(): array

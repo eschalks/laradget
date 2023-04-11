@@ -17,7 +17,6 @@ const props = defineProps<{
     counterParty: App.Data.Models.CounterPartyDetailsDto,
 }>();
 
-const categorySaveUrl = computed(() => {
-    return `/counter_parties/${props.counterParty.id}`;
-});
+const categorySaveUrl = computed(() => route('api.counter_parties.default_category.update', [props.counterParty.id]));
+
 </script>

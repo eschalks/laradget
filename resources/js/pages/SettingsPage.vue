@@ -2,7 +2,7 @@
 <PageLayout title="Settings">
     <DefaultCard title="Accounts">
         <template #actions>
-            <CardAction href="/settings/accounts/import">Add</CardAction>
+            <CardActionLink href="/settings/accounts/import">Add</CardActionLink>
         </template>
 
         <div v-for="account in accounts">
@@ -11,7 +11,7 @@
     </DefaultCard>
     <DefaultCard title="Access Tokens" class="mt-4">
         <template #actions>
-            <CardAction href="/settings/tokens/create">Add</CardAction>
+            <CardActionLink href="/settings/tokens/create">Add</CardActionLink>
         </template>
 
         <table class="data-table">
@@ -37,9 +37,9 @@
 <script lang="ts" setup>
 import PageLayout from "../layouts/PageLayout.vue";
 import DefaultCard from "../components/cards/DefaultCard.vue";
-import CardAction from "../components/cards/CardAction.vue";
 import {format, parseISO} from "date-fns";
 import DeleteButton from "@/components/DeleteButton.vue";
+import CardActionLink from "@/components/cards/CardActionLink.vue";
 
 const props = defineProps<{
     accounts: App.Data.Vue.SettingsPageAccount[],

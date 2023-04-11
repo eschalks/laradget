@@ -15,7 +15,7 @@ class GetTransactions extends Controller
     {
         $query = $this->createTransactionsQuery($request);
 
-        return response()->json(TransactionDto::collection($query->paginate()));
+        return TransactionDto::collection($query->paginate());
     }
 
     private function createTransactionsQuery(Request $request): Builder

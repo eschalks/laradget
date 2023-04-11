@@ -1,13 +1,3 @@
 <template>
-<Link :href="href" class="block p-wide bg-white text-blue-500">
-    <slot />
-</Link>
+    <slot v-bind="$attrs" class="block p-wide bg-white text-blue-500 hover:bg-gray-100" />
 </template>
-
-<script lang="ts" setup>
-import {Link} from "@inertiajs/vue3";
-
-const props = defineProps<{
-    href: string,
-}>();
-</script>

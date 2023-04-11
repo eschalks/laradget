@@ -9,6 +9,6 @@ class GetCategories extends Controller
 {
     public function __invoke()
     {
-        return response()->json(CategoryGroupDto::fetchAll());
+        return CategoryGroupDto::fetchAll();
     }
 }

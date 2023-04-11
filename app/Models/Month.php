@@ -18,9 +18,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Month whereEndsAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Month whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Month whereStartsAt($value)
- * @mixin \Eloquent
  * @method static PeriodCollection|static[] all($columns = ['*'])
  * @method static PeriodCollection|static[] get($columns = ['*'])
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Transaction> $transactions
+ * @property-read int|null $transactions_count
+ * @mixin \Eloquent
  */
 class Month extends AbstractModel
 {

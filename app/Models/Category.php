@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use App\Attributes\OnChangeTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 /**
  * App\Models\Category
  *
- * @property int $id
- * @property int $category_group_id
- * @property string $name
- * @property int $seq
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int                                                                         $id
+ * @property int                                                                         $category_group_id
+ * @property string                                                                      $name
+ * @property int                                                                         $seq
+ * @property \Illuminate\Support\Carbon|null                                             $created_at
+ * @property \Illuminate\Support\Carbon|null                                             $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category query()
@@ -22,10 +24,29 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereSeq($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property int $is_debit
+ * @property int                                                                         $is_debit
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereIsDebit($value)
+ * @property int                                                                         $month_offset
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Transaction> $transactions
+ * @property-read int|null                                                               $transactions_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereMonthOffset($value)
+ * @mixin \Eloquent
  */
 class Category extends AbstractModel
 {
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    #[OnChangeTo('month_offset')]
+    private function updateTransactionDates(): void
+    {
+        \DB::transaction(function () {
+            foreach ($this->transactions as $transaction) {
+                $transaction->setRelation('category', $this);
+                $transaction->updateMonth();
+            }
+        });
+    }
 }
