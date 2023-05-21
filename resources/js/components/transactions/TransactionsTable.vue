@@ -18,8 +18,9 @@
 
 <script lang="ts" setup>
 import TransactionsTableRow from "@/components/transactions/TransactionsTableRow.vue";
+import {TransactionDto} from "@/generated/generated";
 
 const props = defineProps<{
-    transactions: App.Data.Models.TransactionDto[],
+    transactions: TransactionDto[],
 }>();
 </script>

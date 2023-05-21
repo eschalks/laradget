@@ -1,5 +1,7 @@
 <?php
 
+use Spatie\LaravelData\Support\TypeScriptTransformer\DataTypeScriptCollector;
+
 return [
     /*
      * The paths where typescript-transformer will look for PHP classes
@@ -18,6 +20,7 @@ return [
 
     'collectors' => [
         Spatie\TypeScriptTransformer\Collectors\DefaultCollector::class,
+        DataTypeScriptCollector::class,
     ],
 
     /*
@@ -56,7 +59,8 @@ return [
      * But you can also use the `ModuleWriter` or implement your own.
      */
 
-    'writer' => Spatie\TypeScriptTransformer\Writers\TypeDefinitionWriter::class,
+//    'writer' => Spatie\TypeScriptTransformer\Writers\TypeDefinitionWriter::class,
+    'writer' => Spatie\TypeScriptTransformer\Writers\ModuleWriter::class,
 
     /*
      * The generated TypeScript file can be formatted. We ship a Prettier formatter

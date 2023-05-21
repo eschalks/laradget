@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Transactions;
 
 use App\Data\Models\CategoryGroupDto;
 use App\Data\Models\TransactionDto;
+use App\Data\Pages\TransactionsPage;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PeriodCollection;
 use App\Models\CategoryGroup;
@@ -25,8 +26,8 @@ class ShowPeriodTransactions extends Controller
 
         CategoryGroupDto::shareWithInertia();
 
-        return Inertia::render('TransactionsPage', [
-            'transactions'   => TransactionDto::collection($transactions),
-        ]);
+        return TransactionsPage::from([
+                                          'transactions' => $transactions,
+                                      ]);
     }
 }

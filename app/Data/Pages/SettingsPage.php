@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Data\Vue;
+namespace App\Data\Pages;
 
+use App\Data\Vue\SettingsPageAccount;
+use App\Data\Vue\SettingsPagePersonalAccessToken;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
-use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
-#[TypeScript]
-class SettingsPageProperties extends Data
+class SettingsPage extends AbstractPage
 {
     public function __construct(
         /** @var \App\Data\Vue\SettingsPageAccount[] */
@@ -19,5 +19,10 @@ class SettingsPageProperties extends Data
         public readonly DataCollection $tokens,
     )
     {
+    }
+
+    protected function getPageComponent(): string
+    {
+        return 'SettingsPage';
     }
 }

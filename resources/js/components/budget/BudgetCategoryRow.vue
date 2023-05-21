@@ -21,10 +21,11 @@ import MoneySpan from "@/components/MoneySpan.vue";
 import BudgetCategoryTransactionsDialog from "@/components/budget/BudgetCategoryTransactionsDialog.vue";
 import {ref} from "vue";
 import DialogOpenLink from "@/components/DialogOpenLink.vue";
+import {CategoryDto, PeriodSummary} from "@/generated/generated";
 
 const props = defineProps<{
-    summary: App.Data.Responses.PeriodSummary,
-    category: App.Data.Models.CategoryDto,
+    summary: PeriodSummary,
+    category: CategoryDto,
 }>();
 
 

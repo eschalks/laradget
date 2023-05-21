@@ -24,9 +24,10 @@ import {computed} from "vue";
 import {format, parseISO} from "date-fns";
 import MoneySpan from "@/components/MoneySpan.vue";
 import CategorySelect from "@/components/forms/CategorySelect.vue";
+import {TransactionDto} from "@/generated/generated";
 
 const props = defineProps<{
-    transaction: App.Data.Models.TransactionDto,
+    transaction: TransactionDto,
 }>();
 
 const transactionDate = computed(() => {

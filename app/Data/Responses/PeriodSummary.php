@@ -6,7 +6,6 @@ use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\LiteralTypeScriptType;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
-#[TypeScript]
 class PeriodSummary extends Data
 {
     public function __construct(

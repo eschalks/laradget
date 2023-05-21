@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Budget;
 
+use App\Data\Pages\BudgetPage;
 use App\Data\Responses\PeriodSummary;
 use App\Http\Controllers\Controller;
 use App\Models\Month;
@@ -18,6 +19,6 @@ class ShowMonthSummary extends Controller
 
         $month = Month::findForDate($date);
 
-        return new BudgetPageResponse($periodSummaryFactory->createForMonth($month));
+        return BudgetPage::create($periodSummaryFactory->createForMonth($month));
     }
 }

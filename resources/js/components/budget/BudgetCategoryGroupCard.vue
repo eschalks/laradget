@@ -26,10 +26,11 @@ import DefaultCard from "@/components/cards/DefaultCard.vue";
 import BudgetCategoryRow from "@/components/budget/BudgetCategoryRow.vue";
 import {computed} from "vue";
 import MoneySpan from "@/components/MoneySpan.vue";
+import {CategoryGroupDto, PeriodSummary} from "@/generated/generated";
 
 const props = defineProps<{
-    summary: App.Data.Responses.PeriodSummary,
-    categoryGroup: App.Data.Models.CategoryGroupDto,
+    summary: PeriodSummary,
+    categoryGroup: CategoryGroupDto,
 }>();
 
 const totalSpent = computed(() => props.summary.categoryGroupTotals[props.categoryGroup.id]);

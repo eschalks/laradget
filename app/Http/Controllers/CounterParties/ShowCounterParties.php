@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CounterParties;
 
 use App\Data\Models\CategoryGroupDto;
 use App\Data\Models\CounterPartyDetailsDto;
+use App\Data\Pages\CounterPartiesPage;
 use App\Http\Controllers\Controller;
 use App\Models\CounterParty;
 use App\Models\Transaction;
@@ -27,11 +28,10 @@ class ShowCounterParties extends Controller
                                                      ->whereNull('category_id')
                                                      ->groupBy('counter_party_id')
                                                      ->get()
-                                                     ->pluck('count', 'counter_party_id');
+                                                     ->pluck('count', 'counter_party_id')
+                                                     ->all();
 
-        return Inertia::render('CounterPartiesPage', [
-            'counterParties'                 => CounterPartyDetailsDto::collection($counterParties),
-            'uncategorizedTransactionCounts' => $uncategorizedTransactionCounts,
-        ]);
+        return new CounterPartiesPage(CounterPartyDetailsDto::collection($counterParties),
+                                      $uncategorizedTransactionCounts);
     }
 }

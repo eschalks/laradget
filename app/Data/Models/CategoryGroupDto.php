@@ -9,7 +9,6 @@ use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
-#[TypeScript]
 class CategoryGroupDto extends Data
 {
     public function __construct(

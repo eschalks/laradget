@@ -11,10 +11,11 @@ import AnimatedDialog from "@/components/dialogs/AnimatedDialog.vue";
 import ApiResult from "@/components/ApiResult.vue";
 import {computed} from "vue";
 import BudgetCategoryTransactionsDialogBody from "@/components/budget/BudgetCategoryTransactionsDialogBody.vue";
+import {CategoryDto, PeriodSummary} from "@/generated/generated";
 
 const props = defineProps<{
-    category: App.Data.Models.CategoryDto,
-    summary: App.Data.Responses.PeriodSummary,
+    category: CategoryDto,
+    summary: PeriodSummary,
 }>();
 
 const transactionsPath = computed(() => {

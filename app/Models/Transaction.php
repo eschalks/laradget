@@ -45,12 +45,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Transaction extends AbstractModel
 {
-    protected $dates = [
-        'transaction_at',
-    ];
-
     protected $casts = [
         'amount' => Money::class,
+        'transaction_at' => 'datetime'
     ];
 
     protected static function boot()

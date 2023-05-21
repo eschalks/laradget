@@ -19,8 +19,9 @@
 import CategorySelect from "@/components/forms/CategorySelect.vue";
 import {computed, ref} from "vue";
 import CounterPartiesTableRow from "@/components/counter_parties/CounterPartiesTableRow.vue";
+import {CounterPartyDetailsDto} from "@/generated/generated";
 
 const props = defineProps<{
-    counterParties: App.Data.Models.CounterPartyDetailsDto[],
+    counterParties: CounterPartyDetailsDto[],
 }>();
 </script>

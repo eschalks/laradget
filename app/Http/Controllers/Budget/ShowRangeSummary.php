@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Budget;
 
+use App\Data\Pages\BudgetPage;
 use App\Data\Responses\PeriodSummary;
 use App\Http\Controllers\Controller;
 use App\Models\Month;
@@ -19,7 +20,7 @@ class ShowRangeSummary extends Controller
 
 
         $summary = $periodSummaryFactory->createForRange($start, $end);
-        return new BudgetPageResponse($summary);
+        return BudgetPage::create($summary);
     }
 
     private function fetchTransactionTotals(\DateTimeInterface $start, \DateTimeInterface $end): array

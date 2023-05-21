@@ -6,7 +6,6 @@ use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
-#[TypeScript]
 class CategoryDto extends Data
 {
     public function __construct(

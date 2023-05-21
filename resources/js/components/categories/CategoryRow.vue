@@ -14,14 +14,15 @@
 <script lang="ts" setup>
 import {App} from "vue";
 import {router} from "@inertiajs/vue3";
+import {CategoryDto} from "@/generated/generated";
 
 const props = defineProps<{
-    category: App.Data.Models.CategoryDto,
+    category: CategoryDto,
 }>();
 
 type FilteredKeyOf<T, TK> = keyof Pick<T, { [K in keyof T]: T[K] extends TK ? K : never }[keyof T]>;
 
-function updateMonthOffset(field: FilteredKeyOf<App.Data.Models.CategoryDto, boolean>) {
+function updateMonthOffset(field: FilteredKeyOf<CategoryDto, boolean>) {
     const newValue = props.category.monthOffset === 0 ? 1 : 0;
     props.category.monthOffset = newValue;
 

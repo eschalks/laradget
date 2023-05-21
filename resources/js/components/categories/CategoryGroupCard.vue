@@ -24,8 +24,9 @@
 import DefaultCard from "@/components/cards/DefaultCard.vue";
 import CardActionButton from "@/components/cards/CardActionButton.vue";
 import CategoryRow from "@/components/categories/CategoryRow.vue";
+import {CategoryGroupDto} from "@/generated/generated";
 
 const props = defineProps<{
-    categoryGroup: App.Data.Models.CategoryGroupDto,
+    categoryGroup: CategoryGroupDto,
 }>();
 </script>

@@ -40,11 +40,9 @@ import DefaultCard from "../components/cards/DefaultCard.vue";
 import {format, parseISO} from "date-fns";
 import DeleteButton from "@/components/DeleteButton.vue";
 import CardActionLink from "@/components/cards/CardActionLink.vue";
+import {SettingsPage} from "@/generated/generated";
 
-const props = defineProps<{
-    accounts: App.Data.Vue.SettingsPageAccount[],
-    tokens: App.Data.Vue.SettingsPagePersonalAccessToken[],
-}>();
+const props = defineProps<SettingsPage>();
 
 
 </script>

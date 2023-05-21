@@ -22,9 +22,10 @@
 <script lang="ts" setup>
 import {PaginatedResponse} from "@/hooks/api";
 import MoneySpan from "@/components/MoneySpan.vue";
+import {TransactionDto} from "@/generated/generated";
 
 const props = defineProps<{
-    transactions: PaginatedResponse<App.Data.Models.TransactionDto>,
+    transactions: PaginatedResponse<TransactionDto>,
 }>();
 
 

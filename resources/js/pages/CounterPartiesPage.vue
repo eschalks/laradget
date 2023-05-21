@@ -13,15 +13,13 @@ import CounterPartiesTable from "@/components/counter_parties/CounterPartiesTabl
 import DefaultCard from "@/components/cards/DefaultCard.vue";
 import {computed, ref, watch} from "vue";
 import UncategorizedToggle from "@/components/forms/UncategorizedToggle.vue";
+import {CounterPartiesPage, CounterPartyDetailsDto} from "@/generated/generated";
 
 
-const props = defineProps<{
-    counterParties: App.Data.Models.CounterPartyDetailsDto[],
-    uncategorizedTransactionCounts: Record<number, number>,
-}>();
+const props = defineProps<CounterPartiesPage>();
 
 const isUncategorizedOnly = ref(true);
-const visibleParties = ref<App.Data.Models.CounterPartyDetailsDto[]>([]);
+const visibleParties = ref<CounterPartyDetailsDto[]>([]);
 
 const uncategorized = computed(() => {
     return props.counterParties.filter(cp => !cp.defaultCategoryId && props.uncategorizedTransactionCounts[cp.id]);

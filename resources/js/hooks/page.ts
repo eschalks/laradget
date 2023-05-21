@@ -1,5 +1,6 @@
 import {computed, ComputedRef, getCurrentInstance, Ref,} from "vue";
 import {router, usePage} from "@inertiajs/vue3";
+import {CategoryGroupDto} from "@/generated/generated";
 
 
 
@@ -18,7 +19,7 @@ export function usePageProp<T>(key: string, defaultFactory: () => T): ComputedRe
 }
 
 export function useCategoryGroups() {
-    return usePageProp<App.Data.Models.CategoryGroupDto[]>('categoryGroups', () => {
+    return usePageProp<CategoryGroupDto[]>('categoryGroups', () => {
         console.warn('Page is missing category groups. Please call CategoryGroupDto::shareWithInertia()');
         return [];
     });

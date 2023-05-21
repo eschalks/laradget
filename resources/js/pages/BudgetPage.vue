@@ -15,9 +15,7 @@
 import PageLayout from "@/layouts/PageLayout.vue";
 import BudgetCategoryGroupCard from "@/components/budget/BudgetCategoryGroupCard.vue";
 import MoneySpan from "@/components/MoneySpan.vue";
+import {BudgetPage} from "@/generated/generated";
 
-const props = defineProps<{
-    categoryGroups: App.Data.Models.CategoryGroup[],
-    summary: App.Data.Responses.PeriodSummary
-}>();
+const props = defineProps<BudgetPage>();
 </script>

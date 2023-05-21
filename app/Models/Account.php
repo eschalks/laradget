@@ -34,11 +34,9 @@ use App\Money;
  */
 class Account extends AbstractModel
 {
-    protected $dates = [
-        'balance_updated_at',
-    ];
 
     protected $casts = [
         'balance' => Money::class,
+        'balance_updated_at' => 'datetime',
     ];
 }
