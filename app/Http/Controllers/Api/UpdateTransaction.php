@@ -16,8 +16,9 @@ class UpdateTransaction extends Controller
 {
     public function __invoke(Transaction $transaction, UpdateTransactionForm $updateTransactionForm): Responsable
     {
-        $transaction->update($updateTransactionForm->all());
-        $transaction->updateMonth();
+        $transaction->update([
+                                 'category_id' => $updateTransactionForm->categoryId,
+                             ]);
 
         $transaction->loadMissing('counterParty');
 
