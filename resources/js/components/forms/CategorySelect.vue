@@ -10,10 +10,9 @@
 </template>
 
 <script lang="ts" setup>
-import {usePage} from "@inertiajs/vue3";
-import {computed, Ref, watch} from "vue";
-import axios from "axios";
+import {watch} from "vue";
 import {useCategoryGroups} from "@/hooks/page";
+import {apiAxios} from "@/ajax";
 
 const props = withDefaults(defineProps<{
     modelValue: string | number | null,
@@ -39,7 +38,7 @@ watch(() => props.modelValue, async (newId) => {
        const data: Record<string, unknown> = {};
        data[props.saveField] = newId;
 
-       await axios.put(props.saveUrl, {
+       await apiAxios.put(props.saveUrl, {
           categoryId: newId,
        });
    }

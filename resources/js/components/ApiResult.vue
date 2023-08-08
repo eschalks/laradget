@@ -9,6 +9,7 @@
 <script lang="ts" setup>
 import {ref, watch} from "vue";
 import axios, {AxiosError} from "axios";
+import {apiAxios} from "@/ajax";
 
 const props = defineProps<{
     path: string,
@@ -22,7 +23,7 @@ watch(() => props.path, async (path) => {
     error.value = null;
 
     try {
-        const response = await axios.get(`/api/${path}`);
+        const response = await apiAxios.get(path);
         result.value = response.data;
     } catch (e: any) {
         if (e instanceof AxiosError) {
