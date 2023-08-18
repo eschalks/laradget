@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Money;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\Account
@@ -39,4 +40,9 @@ class Account extends AbstractModel
         'balance' => Money::class,
         'balance_updated_at' => 'datetime',
     ];
+
+    public function accountProvider(): BelongsTo
+    {
+        return $this->belongsTo(AccountProvider::class);
+    }
 }

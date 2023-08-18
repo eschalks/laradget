@@ -13,6 +13,7 @@ use App\Http\Controllers\PostLogin;
 use App\Http\Controllers\RedirectToStartPage;
 use App\Http\Controllers\Settings\CreatePersonalAccessToken;
 use App\Http\Controllers\Settings\DeletePersonalAccessToken;
+use App\Http\Controllers\Settings\ExportAccount;
 use App\Http\Controllers\Settings\ImportAccount;
 use App\Http\Controllers\Settings\ShowAccountImport;
 use App\Http\Controllers\Settings\ShowPersonalAccessTokenForm;
@@ -62,6 +63,8 @@ Route::middleware(['auth'])->group(function() {
        Route::get('', ShowSettings::class);
        Route::get('/accounts/import', ShowAccountImport::class);
        Route::post('/accounts/import', ImportAccount::class);
+
+       Route::get('/accounts/{account}/export', ExportAccount::class);
 
        Route::get('/tokens/create', ShowPersonalAccessTokenForm::class);
        Route::post('/tokens/create', CreatePersonalAccessToken::class);

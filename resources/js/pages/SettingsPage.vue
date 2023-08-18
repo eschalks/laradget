@@ -5,9 +5,14 @@
             <CardActionLink href="/settings/accounts/import">Add</CardActionLink>
         </template>
 
-        <div v-for="account in accounts">
-            {{ account.name }}
-        </div>
+        <table class="data-table">
+            <tr v-for="account in accounts">
+                <td>{{ account.name }}</td>
+                <td>
+                    <a class="text-blue-500 underline" :href="`/settings/accounts/${account.id}/export`">Export</a>
+                </td>
+            </tr>
+        </table>
     </DefaultCard>
     <DefaultCard title="Access Tokens" class="mt-4">
         <template #actions>
