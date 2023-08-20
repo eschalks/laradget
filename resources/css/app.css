@@ -11,7 +11,7 @@
 }
 
 .data-table th {
-    @apply font-bold text-left p-wide;
+    @apply font-normal text-left p-wide bg-blue-500 text-white ;
 }
 
 .data-table td {
@@ -26,4 +26,8 @@
     @apply text-right tabular-nums;
 
     min-width: 8rem;
+}
+
+.data-table tr {
+    @apply even:bg-blue-50;
 }
