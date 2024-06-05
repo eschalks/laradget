@@ -3,6 +3,7 @@
 namespace App\Data\Models;
 
 use App\Models\CategoryGroup;
+use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
@@ -21,11 +22,11 @@ class CategoryGroupDto extends Data
     }
 
     /**
-     * @return DataCollection<int, \App\Data\Models\CategoryGroupDto>
+     * @return Collection<int, CategoryGroupDto>
      */
-    public static function fetchAll(): DataCollection
+    public static function fetchAll(): Collection
     {
-        return CategoryGroupDto::collection(CategoryGroup::with('categories')
+        return CategoryGroupDto::collect(CategoryGroup::with('categories')
                                                          ->orderBy('seq')
                                                          ->get());
     }

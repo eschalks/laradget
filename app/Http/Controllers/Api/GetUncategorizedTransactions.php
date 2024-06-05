@@ -14,6 +14,6 @@ class GetUncategorizedTransactions extends Controller
             ->with('counterParty')
             ->get();
 
-        return response()->json(TransactionDto::collection($transactions));
+        return response()->json(TransactionDto::collect($transactions));
     }
 }

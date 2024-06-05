@@ -31,7 +31,7 @@ class ShowCounterParties extends Controller
                                                      ->pluck('count', 'counter_party_id')
                                                      ->all();
 
-        return new CounterPartiesPage(CounterPartyDetailsDto::collection($counterParties),
+        return new CounterPartiesPage(CounterPartyDetailsDto::collect($counterParties),
                                       $uncategorizedTransactionCounts);
     }
 }

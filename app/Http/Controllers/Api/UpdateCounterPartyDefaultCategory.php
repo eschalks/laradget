@@ -19,7 +19,7 @@ class UpdateCounterPartyDefaultCategory extends Controller
             $category = Category::find($form->categoryId);
             $updatedTransactions = $counterParty->updateDefaultCategory($category);
 
-            return TransactionDto::collection($updatedTransactions);
+            return TransactionDto::collect($updatedTransactions);
         });
     }
 }
