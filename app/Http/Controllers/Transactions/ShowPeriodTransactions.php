@@ -6,7 +6,7 @@ use App\Data\Models\CategoryGroupDto;
 use App\Data\Models\TransactionDto;
 use App\Data\Pages\TransactionsPage;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\PeriodCollection;
+use App\PeriodCollection;
 use App\Models\CategoryGroup;
 use App\Models\Transaction;
 use Illuminate\Http\Request;

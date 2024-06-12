@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\PeriodCollection;
+use App\PeriodCollection;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
