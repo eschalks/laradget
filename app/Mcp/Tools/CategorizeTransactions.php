@@ -38,6 +38,10 @@ class CategorizeTransactions extends Tool
                 ->lockForUpdate()
                 ->get();
 
+            if ($transactions->count() !== count($input['transaction_ids'])) {
+                return Response::error('One or more transactions no longer exist. Reload the transaction list and try again.');
+            }
+
             $protected = $transactions->filter(fn (Transaction $transaction) => $transaction->category_id !== null
                 && $transaction->category_id !== $input['category_id']);
 
