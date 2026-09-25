@@ -15,7 +15,7 @@ class GetTransactions extends Controller
     {
         $query = $this->createTransactionsQuery($request);
 
-        return TransactionDto::collecy($query->paginate());
+        return TransactionDto::collect($query->paginate());
     }
 
     private function createTransactionsQuery(Request $request): Builder
