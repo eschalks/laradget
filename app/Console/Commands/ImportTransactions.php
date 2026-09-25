@@ -18,7 +18,7 @@ class ImportTransactions extends Command
      *
      * @var string
      */
-    protected $signature = 'import:transactions';
+    protected $signature = 'import:transactions {--all}';
 
     /**
      * The console command description.
@@ -34,20 +34,13 @@ class ImportTransactions extends Command
      */
     public function handle(TrueLayerClient $client)
     {
-
-
         \DB::transaction(function () use ($client) {
-            $account           = Account::first();
-            $lastTransactionAt = Transaction::orderBy('transaction_at', 'desc')
-                                            ->first()->transaction_at;
+            $account = Account::first();
+            $startDate = $this->determineStartDate();
 
-            if ($lastTransactionAt === null) {
-                $lastTransactionAt = today()->subDays(90);
-            }
+            $this->output->writeln("Fetching all transactions since $startDate");
 
-            $this->output->writeln("Fetching all transactions since $lastTransactionAt");
-
-            $transactions = $client->fetchTransactions($account->external_id, $lastTransactionAt, now());
+            $transactions = $client->fetchTransactions($account->external_id, $startDate, now());
 
             $this->withProgressBar($transactions, function (TransactionTL $transaction) {
                 $this->importTransaction($transaction);
@@ -101,5 +94,22 @@ class ImportTransactions extends Command
         }
 
         return $counterParty;
+    }
+
+    private function determineStartDate(): \DateTimeInterface
+    {
+        if ($this->option('all')) {
+            return today()->subDays(90);
+        }
+
+        $lastTransactionAt = Transaction::orderBy('transaction_at', 'desc')
+            ->first()?->transaction_at;
+
+        if ($lastTransactionAt === null) {
+            return today()->subDays(90);
+        }
+
+        // Some data might be backdated in the API due to banking delays
+        return $lastTransactionAt->copy()->subDays(7);
     }
 }
